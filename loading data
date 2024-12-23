@@ -1,1 +1,36 @@
+import os
+from langchain.docstore.document import Document
+from langchain.docstore.loader import TextLoader, PDFLoader
 
+def load_documents(directory_path):
+    """
+    Load documents from a directory.
+
+    Args:
+        directory_path (str): Path to the directory containing documents.
+
+    Returns:
+        list[Document]: List of loaded documents.
+    """
+    loaded_documents = []
+
+    # Iterate over files in the directory
+    for filename in 
+os.listdir(directory_path):
+        file_path = os.path.join(directory_path, filename)
+
+        # Check file extension
+        if filename.endswith(".txt"):
+            # Load .txt file using TextLoader
+            with open(file_path, "r") as file:
+                content = file.read()
+                document = Document(page_content=content)
+                loaded_documents.append(document)
+        elif filename.endswith(".pdf"):
+            # Load .pdf file using PDFLoader
+            pdf_loader = PDFLoader()
+            content = pdf_loader.load_file(file_path)
+            document = Document(page_content=content)
+loaded_documents.append(document)
+
+    return loaded_documents
